@@ -72,15 +72,20 @@ def mainFunc(url = None):
 
         elif(line.split()[1] == 'Kill:'):
             try:
-                if(line.split()[5] != '<world>'):
+                separate = line.split('killed')
+                matou = separate[0].split(':')
+                print(matou)
+                morto = separate[1].split('by')
+                print(morto)
+                if(matou[len(matou)-1] != '<world>'):
                     data['game_{}'.format(
-                        nGame)]['kills'][line.split()[5]] += 1
-                data['game_{}'.format(nGame)]['kills'][line.split()[7]] -= 1
+                        nGame)]['kills'][matou[len(matou)-1]] += 1
+                data['game_{}'.format(nGame)]['kills'][morto[0]] -= 1
                 data['game_{}'.format(nGame)]['total_kills'] += 1
             except:
                 if(line.split()[5] != '<world>'):
-                    data['game_{}'.format(nGame)]['kills'][line.split()[5]] = 1
-                data['game_{}'.format(nGame)]['kills'][line.split()[7]] = -1
+                    data['game_{}'.format(nGame)]['kills'][matou[len(matou)-1]] = 1
+                data['game_{}'.format(nGame)]['kills'][morto[0]] = -1
 
     allGames.append(data)
     if(isFromInternet):
@@ -91,11 +96,18 @@ def mainFunc(url = None):
 
 
 if __name__ == "__main__":
-    if(sys.argv[2] == 'test'):
-        test_parser()
-        print("Everything passed")
-    else:
-        mainFunc(sys.argv[1])
+    # if(sys.argv[2] == 'test'):
+    #     test_parser()
+    #     print("Everything passed")
+    # else:
+    #     mainFunc(sys.argv[1])
+    arq = open('games.log','r')
+    arqLines = arq.readlines()
+    separate = arqLines[4741].split('killed')
+    matou = separate[0].split(':')
+    print(matou)
+    morto = separate[1].split('by')
+    print(morto)
 
 # print(arqLines)
 
